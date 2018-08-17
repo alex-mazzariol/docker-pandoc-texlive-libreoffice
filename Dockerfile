@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq \
     && apt-get install -y -q libreoffice \
     && apt-get remove -q -y libreoffice-gnome \
-    && apt-get install -y -q texlive pandoc
+    && apt-get install -y -q texlive pandoc curl
 
 # Cleanup after apt-get commands
 RUN apt-get clean \
