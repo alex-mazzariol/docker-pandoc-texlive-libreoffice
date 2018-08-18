@@ -1,25 +1,10 @@
-FROM debian
+FROM openjdk:8-jre-slim
 
-# Disable prompts on apt-get install
-ENV DEBIAN_FRONTEND noninteractive
-
-# Install latest stable LibreOffice
-RUN apt-get update -qq \
-    && apt-get install -y -q libreoffice \
-    && apt-get remove -q -y libreoffice-gnome \
-    && apt-get install -y -q texlive pandoc curl
-
-# Cleanup after apt-get commands
-RUN apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb /var/cache/apt/*cache.bin
-
-# Create user 'converter'
-RUN useradd --create-home --shell /bin/bash converter \
-    # Give user right to run libreoffice binary
-    && chown converter:converter /usr/bin/libreoffice \
-    # Give user right to run pandoc binary
-    && chown converter:converter /usr/bin/pandoc
-
-USER converter
-WORKDIR /home/converter
-
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install \
+    libreoffice-common unoconv hyphen-af hyphen-en-us \
+    fonts-dejavu fonts-dejavu-core fonts-dejavu-extra \
+    fonts-droid-fallback fonts-dustin fonts-f500 fonts-fanwood \
+    fonts-freefont-ttf fonts-liberation fonts-lmodern fonts-lyx \
+    fonts-sil-gentium fonts-texgyre fonts-tlwg-purisa fonts-opensymbol \
+    texlive pandoc curl && apt-get clean  && rm -rf /var/lib/apt/lists/* \
+    /tmp/* /var/tmp/* /var/cache/apt/archives/*.deb /var/cache/apt/*cache.bin
