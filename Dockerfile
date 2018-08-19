@@ -1,3 +1,3 @@
 FROM fedora
 
-RUN dnf install -y libreoffice pandoc texlive-base curl && dnf clean all
+RUN dnf install -y libreoffice pandoc texlive-base curl file && dnf clean all
